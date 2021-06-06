@@ -22,6 +22,7 @@ import io.zeebe.model.bpmn.instance.Message;
 import io.zeebe.spring.client.ZeebeClientLifecycle;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,6 +45,9 @@ public class ZeebeCloudEventsRouterController {
 
     @Autowired
     private JobClient jobClient;
+
+    @Value("${SELF_REF_URL:zeebe-cloud-events-router}")
+    private String selfRefUrl;
 
     @GetMapping("/status")
     public String getStatus() {
@@ -143,7 +147,7 @@ public class ZeebeCloudEventsRouterController {
                                 .addToAttributes("type", m.getName())
                             .endFilter()
                         .withNewSubscriber()
-                            .withUri("http://zeebe-cloud-events-router.default.svc.cluster.local/message")
+                            .withUri("http://" + selfRefUrl + "/message")
                         .endSubscriber()
                         .endSpec()
                         .done();

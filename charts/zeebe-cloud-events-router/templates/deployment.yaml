@@ -55,7 +55,9 @@ spec:
                 name: camunda-cloud-secret
 {{- end }}
           - name: ZEEBE_CLIENT_SECURITY_PLAINTEXT
-            value: "false"
+            value: {{ default "false" .Values.usePlaintext | quote }}
+          - name: SELF_REF_URL
+            value: {{ .Values.service.name }}
 {{- range $pkey, $pval := .Values.env }}
           - name: {{ $pkey }}
             value: {{ quote $pval }}

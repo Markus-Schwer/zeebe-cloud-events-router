@@ -3,8 +3,8 @@
 # Declare variables to be passed into your templates.
 replicaCount: 1
 image:
-  repository: draft
-  tag: dev
+  repository: docker-registry-ui.ehrencluster/zeebe-cloud-events-router
+  tag: 0.0.51
   pullPolicy: IfNotPresent
 
 # optional list of image pull secrets to use to pull images
@@ -72,6 +72,7 @@ readinessProbe:
   timeoutSeconds: 1
 
 externalSecretForZeebe: false
+usePlaintext: false
 
 # custom ingress annotations on this service
 ingress:
